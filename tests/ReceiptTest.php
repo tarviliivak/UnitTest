@@ -20,9 +20,12 @@ class ReceiptTest extends TestCase {
     }
     public function testTotal() {
         $input = [0,2,5,8];
-        $output = $this->Receipt->total($input);
-        //we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 21
+        $coupon  =  null;
+        //we  add an instance named coupon that is = null
+        $output = $this->Receipt->total($input, $coupon);
+        //here we add coupon as well
 
+        //we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 21
         $this->assertEquals(
         //write first assertion to pass in a simple array of some ints
             15,
@@ -33,6 +36,19 @@ class ReceiptTest extends TestCase {
         );
     }
 
+    public function testTotalAndCoupon() {
+        $input = [0,2,5,8];
+        $coupon = 0.20;
+        //pass a coupon percentage value of 20% or 0.20.
+        $output = $this->Receipt->total($input, $coupon);
+        //The coupon is used and  take 20% off the total sum
+        $this->assertEquals(
+            12,
+            //20%  of 15 is  3.
+            $output,
+            'When summing the total should equal 12'
+        );
+    }
     public function testTax() {
         $inputAmount = 10.00;
         //We can add an input amount variable of equal to 10 dollars, or 10.00
