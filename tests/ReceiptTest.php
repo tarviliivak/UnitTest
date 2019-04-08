@@ -10,7 +10,9 @@ class ReceiptTest extends TestCase {
         $Receipt = new Receipt();
         $this->assertEquals(
             15,
+            //expectec  value
             $Receipt->total([0,2,5,8]),
+            //actual value
             'When summing the total should equal 15'
         );
     }
