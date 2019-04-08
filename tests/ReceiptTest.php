@@ -32,4 +32,18 @@ class ReceiptTest extends TestCase {
             'When summing the total should equal 15'
         );
     }
+
+    public function testTax() {
+        $inputAmount = 10.00;
+        //We can add an input amount variable of equal to 10 dollars, or 10.00
+        $taxInput = 0.10;
+        //we'll add taxInput and it'll be equal to 0.10 After this, we can call a tax method on our receipt object
+        $output = $this->Receipt->tax($inputAmount, $taxInput);
+        $this->assertEquals(
+        //we can assert that the tax amount should be equal to 1.00 or 11.00 if sum together
+            1.00,
+            $output,
+            'The tax calculation should equal 1.00'
+        );
+    }
 }
