@@ -44,8 +44,8 @@ class ReceiptTest extends TestCase {
     public function provideTotal() {
         // we'll add public function provideTotal
         return [
-            [[1,2,5,8], 16],
-
+            'ints totaling 16' => [[1,2,5,8], 16],
+            // We add 'ints totalling 16' and see how we can filter tests by a particular key
             [[-1,2,5,8], 14],
         // we'll set the positive value one to a negative one, which will reduce our expected value to be 14
             [[1,2,8], 11],
