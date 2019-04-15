@@ -49,6 +49,27 @@ class ReceiptTest extends TestCase {
             'When summing the total should equal 12'
         );
     }
+
+    public function testPostTaxTotal() {
+        //  Our test here will build a mock instance of the Receipt class so we can replace the instance we are using and instead call it, and then return the sum from the two calls
+        $Receipt = $this->getMockBuilder('TDD\Receipt')
+        // we'll add on line 38, $this->getMockBuilder and then pass in the string with the namespace name of the class that we want to build
+            ->setMethods(['tax', 'total'])
+        // we need to define the methods our stub will respond to, so we'll add, on line 39 - >setMethods().
+            ->getMock();
+        //  we can now return the instance of the mock with a call to getMock on line 40
+        $Receipt->method('total')
+        // we'll update our stub to respond to our two method calls for tax and total and then inform them to return the data that we want them to. To do so, we will add on line 41 $Receipt->method and then pass in the string name of the method that we want to define what exactly our stub will perform. In this case, we'll pass in total.
+            ->will($this->returnValue(10.00));
+        // we then call a method will. This method will simply says what exactly will that stubbed method do. So, on line 42, we'll add ->will(). In this case, this method will return a value equal to 10.00. So, we will do $this->returnValue(10.00).We now to repeat this for our tax method, which our tax method will return 1.00, so we'll add $Receipt->method('tax').
+        $Receipt->method('tax')
+            ->will($this->returnValue(1.00));
+        $result = $Receipt->postTaxTotal([1,2,5,8], 0.20, null);
+        // On line 45, add $result is equal to our $Receipt instance - >postTaxTotal with an array of one, two, five, and eight.
+        $this->assertEquals(11.00, $result);
+        //We will now add the assert to assert that the result is equal to 11 on line 46. We'll add $this->assertEquals(11.00) and then $result.
+    }
+
     public function testTax() {
         $inputAmount = 10.00;
         //We can add an input amount variable of equal to 10 dollars, or 10.00
