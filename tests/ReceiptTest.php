@@ -18,22 +18,39 @@ class ReceiptTest extends TestCase {
         unset($this->Receipt);
     // we'll add unset this arrow Receipt
     }
-    public function testTotal() {
-        $input = [0,2,5,8];
-        $coupon  =  null;
+    /**
+     * @dataProvider provideTotal
+     */
+    //// we'll add a dot block, and add the annotation @dataProvider provideTotal
+    public function testTotal($items, $expected) {
+        $coupon = null;
+        // Remove the input bar
         //we  add an instance named coupon that is = null
-        $output = $this->Receipt->total($input, $coupon);
+        $output = $this->Receipt->total($items, $coupon);
         //here we add coupon as well
-
-        //we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 21
+        // /we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 27
         $this->assertEquals(
         //write first assertion to pass in a simple array of some ints
-            15,
-            //we will erase the Receipt arrow total
-            //we'll set the expected value of 15
+        //  //we will erase the Receipt arrow total
+        //we'll set the expected value of 15
+            $expected,
             $output,
-            'When summing the total should equal 15'
+            "When summing the total should equal {$expected}"
+        //  replace our value 15 with the expected result.
+        // update the message to use double quotes
         );
+    }
+
+    public function provideTotal() {
+        // we'll add public function provideTotal
+        return [
+            [[1,2,5,8], 16],
+
+            [[-1,2,5,8], 14],
+        // we'll set the positive value one to a negative one, which will reduce our expected value to be 14
+            [[1,2,8], 11],
+        // We can modify the array on line 48 to remove the five, which will now set our expected value to be 11
+        ];
     }
 
     public function testTotalAndCoupon() {
