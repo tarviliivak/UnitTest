@@ -67,6 +67,18 @@ class ReceiptTest extends TestCase {
         );
     }
 
+    public function testTotalException() {
+        //We'll then copy the test total and coupon method, which lives on lines 56 through 68, and we'll duplicate it, on lines 70 through 79.
+        //We'll change the name of this method, to instead be Test Total Exception.
+        // In this case, we'll modify the code to throw in the exception if the coupon value is greater than 1.00, or, in otherwords, greater than 100%.
+        $input = [0,2,5,8];
+        $coupon = 1.20;
+        // we'll first modify the coupon to be 1.20
+        $this->expectException('BadMethodCallException');
+        // we'll add this, arrow, expect, exception.
+        $this->Receipt->total($input, $coupon);
+    }
+
     public function testPostTaxTotal() {
         //  Our test here will build a mock instance of the Receipt
         $items = [1,2,5,8];
