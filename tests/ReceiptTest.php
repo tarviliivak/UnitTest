@@ -51,23 +51,37 @@ class ReceiptTest extends TestCase {
     }
 
     public function testPostTaxTotal() {
-        //  Our test here will build a mock instance of the Receipt class so we can replace the instance we are using and instead call it, and then return the sum from the two calls
+        //  Our test here will build a mock instance of the Receipt
+        $items = [1,2,5,8];
+        //  we'll add in items is equal to an array with the values 1, 2, 5, and 8.
+        $tax = 0.20;
+        //  We'll next add a tax amount which will be equal to 0.20
+        $coupon = null;
+        // we'll add a coupon value that will be equal to null.
         $Receipt = $this->getMockBuilder('TDD\Receipt')
-        // we'll add on line 38, $this->getMockBuilder and then pass in the string with the namespace name of the class that we want to build
+            // we'll add $this->getMockBuilder and then pass in the string with the namespace name of the class that we want to build
+
             ->setMethods(['tax', 'total'])
-        // we need to define the methods our stub will respond to, so we'll add, on line 39 - >setMethods().
+            // we need to define the methods our stub will respond to, so we'll add - >setMethods().
             ->getMock();
-        //  we can now return the instance of the mock with a call to getMock on line 40
-        $Receipt->method('total')
-        // we'll update our stub to respond to our two method calls for tax and total and then inform them to return the data that we want them to. To do so, we will add on line 41 $Receipt->method and then pass in the string name of the method that we want to define what exactly our stub will perform. In this case, we'll pass in total.
+        //  we can now return the instance of the mock with a call to getMock
+        $Receipt->expects($this->once())
+            // we add before our method call, we add arrow expects this once.
+            ->method('total')
+        // // we'll update our stub to respond to our two method calls for tax and total and then inform them to return the data that we want them to. To do so, we will add $Receipt->method and then pass in the string name of the method that we want to define what exactly our stub will perform. In this case, we'll pass in total.
+            ->with($items, $coupon)
+            //  we can add arrow, with, passing in items, and coupon
             ->will($this->returnValue(10.00));
-        // we then call a method will. This method will simply says what exactly will that stubbed method do. So, on line 42, we'll add ->will(). In this case, this method will return a value equal to 10.00. So, we will do $this->returnValue(10.00).We now to repeat this for our tax method, which our tax method will return 1.00, so we'll add $Receipt->method('tax').
-        $Receipt->method('tax')
+        // // we then call a method will. This method will simply says what exactly will that stubbed method do. We'll add ->will(). In this case, this method will return a value equal to 10.00. So, we will do $this->returnValue(10.00).We now to repeat this for our tax method, which our tax method will return 1.00, so we'll add $Receipt->method('tax').
+        $Receipt->expects($this->once())
+        //  We'll add before the method call, arrow, expects, passing in the method, this, arrow, once.
+            ->method('tax')
+            ->with(10.00, $tax)
             ->will($this->returnValue(1.00));
         $result = $Receipt->postTaxTotal([1,2,5,8], 0.20, null);
-        // On line 45, add $result is equal to our $Receipt instance - >postTaxTotal with an array of one, two, five, and eight.
+        // add $result is equal to our $Receipt instance - >postTaxTotal with an array of one, two, five, and eight.
         $this->assertEquals(11.00, $result);
-        //We will now add the assert to assert that the result is equal to 11 on line 46. We'll add $this->assertEquals(11.00) and then $result.
+        //We will now add the assert to assert that the result is equal to 11. We'll add $this->assertEquals(11.00) and then $result.
     }
 
     public function testTax() {
