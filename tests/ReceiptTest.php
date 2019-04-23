@@ -23,12 +23,13 @@ class ReceiptTest extends TestCase {
      */
     //// we'll add a dot block, and add the annotation @dataProvider provideTotal
     public function testTotal($items, $expected) {
+        // Coupon = null is the dummy object
         $coupon = null;
         // Remove the input bar
         //we  add an instance named coupon that is = null
         $output = $this->Receipt->total($items, $coupon);
         //here we add coupon as well
-        // /we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 27
+        // /we'll add variable output is equal to this arrow Receipt arrow total, pass in our variable input, add our semicolon and we'll take output and set it on line 30
         $this->assertEquals(
         //write first assertion to pass in a simple array of some ints
         //  //we will erase the Receipt arrow total
@@ -49,7 +50,7 @@ class ReceiptTest extends TestCase {
             [[-1,2,5,8], 14],
         // we'll set the positive value one to a negative one, which will reduce our expected value to be 14
             [[1,2,8], 11],
-        // We can modify the array on line 48 to remove the five, which will now set our expected value to be 11
+        // We can modify the array on line 52 to remove the five, which will now set our expected value to be 11
         ];
     }
 
@@ -68,7 +69,7 @@ class ReceiptTest extends TestCase {
     }
 
     public function testTotalException() {
-        //We'll then copy the test total and coupon method, which lives on lines 56 through 68, and we'll duplicate it, on lines 70 through 79.
+        //We'll then copy the test total and coupon method, which lives on lines 57 through 69, and we'll duplicate it, on lines 71 through 80.
         //We'll change the name of this method, to instead be Test Total Exception.
         // In this case, we'll modify the code to throw in the exception if the coupon value is greater than 1.00, or, in otherwords, greater than 100%.
         $input = [0,2,5,8];
@@ -87,6 +88,7 @@ class ReceiptTest extends TestCase {
         //  We'll next add a tax amount which will be equal to 0.20
         $coupon = null;
         // we'll add a coupon value that will be equal to null.
+        // Stub
         $Receipt = $this->getMockBuilder('TDD\Receipt')
             // we'll add $this->getMockBuilder and then pass in the string with the namespace name of the class that we want to build
 
